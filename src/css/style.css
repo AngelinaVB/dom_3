@@ -1,0 +1,37 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color:fff;
+}
+
+.title {
+	text-align: center;
+	font-size: 2em;
+	color: #fff;
+}
+
+.board {  
+            display: flex;
+	flex-wrap: wrap;
+	width: 70vmin;
+	height: 70vmin;
+	border: 1px solid black;
+	margin: 0 auto;
+        }  
+
+.cell {  
+            width: 25%;
+	height: 25%;
+	box-sizing: border-box;
+	border: 2px solid black;
+        } 
+
+.img {  
+            width: 90%;  
+            height: 90%; 
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center; 
+        }  
