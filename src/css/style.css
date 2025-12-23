@@ -35,3 +35,19 @@ body {
     background-size: contain;
     background-position: center; 
         }  
+
+.hammer {
+	cursor: url('../img/hammer.png'), auto;
+}
+
+.hammer-boom {
+	cursor: url('../img/hammer-boom.png'), auto;
+}
+
+.status{
+
+	width: 30vmin;
+	border: 1px solid black;
+	margin:  15px auto;
+	background-color: #fff;
+}
