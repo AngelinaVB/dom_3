@@ -4,6 +4,7 @@ export default class GamePlay {
     this.boardSize = 4;
     this.image = image;
     this.activeImage = null;
+    this.position = null;
     this.boardListeners = [];
   }
 
@@ -11,7 +12,7 @@ export default class GamePlay {
     this.redrawBoard();
 
     this.board.addEventListener("click", this.onBoardClick.bind(this));
-    
+
     this.start();
   }
 
@@ -62,7 +63,7 @@ export default class GamePlay {
     this.board.classList.toggle("hammer");
     this.board.classList.toggle("hammer-boom");
   }
-  
+
   createGoblinCounter() {
     this.goblinCounter = document.createElement("div");
     this.goblinCounter.classList.add("status");
@@ -86,12 +87,10 @@ export default class GamePlay {
 
     if (this.dead.textContent >= 10) {
       this.resetScore();
-      alert("Победа!!");
     }
 
-    if (this.lost.textContent >= 5) {
+    if (this.lost.textContent <= 5) {
       this.resetScore();
-      alert("Поражение!");
     }
 
     this.changeCursor();

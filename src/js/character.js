@@ -6,8 +6,7 @@ export default class Сharacter {
   }
 
   createImage() {
-    const image = document.createElement("div");
-    image.classList.add("img");
+    const image = document.createElement("img");
     image.src = imageGoblin;
     image.alt = "Изображение персонажа";
     document.querySelector("body").append(image);
