@@ -1,6 +1,6 @@
 import Board from "./board";
-import GamePlay from "./game";
 import Сharacter from "./character";
+import GamePlay from "./game";
 
 const board = new Board();
 const image = new Сharacter();

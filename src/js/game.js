@@ -10,22 +10,56 @@ export default class GamePlay {
 
   init() {
     this.redrawBoard();
-
     this.board.addEventListener("click", this.onBoardClick.bind(this));
-
     this.start();
+    
   }
 
   redrawBoard() {
-    const board = this.board.getBoard(this.boardSize);
+    this.board = this.board.getBoard(this.boardSize);
     const body = document.querySelector("body");
     const container = document.createElement("div");
     container.classList.add("container");
-    container.append(board);
-    body.append(container, body.firstChild);
-    this.cells = [...board.children];
-    container.append(this.counter);
     this.counter = this.createGoblinCounter();
+    container.append(this.counter);
+    container.append(this.board);
+    body.append(container, body.firstChild);
+    this.cells = [...this.board.children];
+  }
+
+  createGoblinCounter() {
+    this.goblinCounter = document.createElement("div");
+    this.goblinCounter.classList.add("status");
+    this.goblinCounter.innerHTML =
+      'Убито гоблинов:<span class="dead">0</span><br>Промахов:<span class="lost">0</span><br>';
+    return this.goblinCounter;
+  }
+
+  onBoardClick(event) {
+    event.preventDefault();
+    
+    this.dead = document.querySelector(".dead");
+    this.lost = document.querySelector(".lost");
+    this.boardListeners.forEach((callback) => callback(event.target));
+
+    if (event.target.classList.contains("img")) {
+      event.target.classList.remove("img");
+      ++this.dead.textContent;
+    } else {
+      ++this.lost.textContent;
+    }
+
+    if (this.dead.textContent >= 5) {
+      this.dead.innerHTML = this.dead.textContent;
+      this.resetScore();
+    }
+
+    if (this.lost.textContent >= 5) {
+      this.lost.innerHTML = this.lost.textContent;
+      this.resetScore();
+    }
+
+    this.changeCursor();
   }
 
   generateposition() {
@@ -55,8 +89,8 @@ export default class GamePlay {
   }
 
   resetScore() {
-    this.lost.textContent = 0;
     this.dead.textContent = 0;
+    this.lost.textContent = 0;
   }
 
   changeCursor() {
@@ -64,41 +98,9 @@ export default class GamePlay {
     this.board.classList.toggle("hammer-boom");
   }
 
-  createGoblinCounter() {
-    this.goblinCounter = document.createElement("div");
-    this.goblinCounter.classList.add("status");
-    this.goblinCounter.innerHTML =
-      'Убито гоблинов:<span class="dead">0</span><br>Промахов: <span class="lost">0</span><br>';
-    return this.goblinCounter;
-  }
-
-  onBoardClick(event) {
-    event.preventDefault();
-    this.dead = document.querySelector(".dead");
-    this.lost = document.querySelector(".lost");
-    this.boardListeners.forEach((callback) => callback(event.target));
-
-    if (event.target.classList.contains("img")) {
-      ++this.dead.textContent;
-      event.target.classList.remove("img");
-    } else {
-      ++this.lost.textContent;
-    }
-
-    if (this.dead.textContent >= 10) {
-      this.resetScore();
-    }
-
-    if (this.lost.textContent <= 5) {
-      this.resetScore();
-    }
-
-    this.changeCursor();
-  }
-
   start() {
     setInterval(() => {
       this.generateposition();
-    }, 1000);
+    }, 3000);
   }
 }
