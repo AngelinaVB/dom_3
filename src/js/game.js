@@ -4,15 +4,15 @@ export default class GamePlay {
     this.boardSize = 4;
     this.image = image;
     this.activeImage = null;
-    this.position = null;
     this.boardListeners = [];
   }
 
   init() {
     this.redrawBoard();
+
     this.board.addEventListener("click", this.onBoardClick.bind(this));
+
     this.start();
-    
   }
 
   redrawBoard() {
@@ -31,34 +31,34 @@ export default class GamePlay {
     this.goblinCounter = document.createElement("div");
     this.goblinCounter.classList.add("status");
     this.goblinCounter.innerHTML =
-      'Убито гоблинов:<span class="dead">0</span><br>Промахов:<span class="lost">0</span><br>';
+      'Убито гоблинов:<span class = "dead">0</span><br>Промахов:<span class = "lost">0</span>';
     return this.goblinCounter;
   }
 
   onBoardClick(event) {
     event.preventDefault();
-    
     this.dead = document.querySelector(".dead");
     this.lost = document.querySelector(".lost");
     this.boardListeners.forEach((callback) => callback(event.target));
 
     if (event.target.classList.contains("img")) {
-      event.target.classList.remove("img");
-      ++this.dead.textContent;
+      this.dead.textContent++;
+      event.target.classList.remove("img")
     } else {
-      ++this.lost.textContent;
+      this.lost.textContent++;
     }
 
-    if (this.dead.textContent >= 5) {
+    if (this.dead.textContent == 5) {
       this.dead.innerHTML = this.dead.textContent;
+      console.log("Вы выиграли!!!");
       this.resetScore();
     }
 
-    if (this.lost.textContent >= 5) {
+    if (this.lost.textContent > 5) {
       this.lost.innerHTML = this.lost.textContent;
+      console.warn("Вы проиграли!!!");
       this.resetScore();
     }
-
     this.changeCursor();
   }
 
@@ -66,7 +66,8 @@ export default class GamePlay {
     let randomNumber;
 
     do {
-      randomNumber = Math.floor(Math.random() * this.boardSize ** 2);
+      randomNumber = parseInt(Math.floor(Math.random() * this.boardSize ** 2));
+      
     } while (randomNumber === this.position);
 
     this.deletedImage();
@@ -101,6 +102,6 @@ export default class GamePlay {
   start() {
     setInterval(() => {
       this.generateposition();
-    }, 3000);
+    }, 1000);
   }
 }
