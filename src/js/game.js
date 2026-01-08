@@ -31,43 +31,15 @@ export default class GamePlay {
     this.goblinCounter = document.createElement("div");
     this.goblinCounter.classList.add("status");
     this.goblinCounter.innerHTML =
-      'Убито гоблинов:<span class = "dead">0</span><br>Промахов:<span class = "lost">0</span>';
+      'Убито гоблинов: <span class = "dead">0</span><br>Промахов: <span class = "lost">0</span>';
     return this.goblinCounter;
-  }
-
-  onBoardClick(event) {
-    event.preventDefault();
-    this.dead = document.querySelector(".dead");
-    this.lost = document.querySelector(".lost");
-    this.boardListeners.forEach((callback) => callback(event.target));
-
-    if (event.target.classList.contains("img")) {
-      this.dead.textContent++;
-      event.target.classList.remove("img")
-    } else {
-      this.lost.textContent++;
-    }
-
-    if (this.dead.textContent == 5) {
-      this.dead.innerHTML = this.dead.textContent;
-      console.log("Вы выиграли!!!");
-      this.resetScore();
-    }
-
-    if (this.lost.textContent > 5) {
-      this.lost.innerHTML = this.lost.textContent;
-      console.warn("Вы проиграли!!!");
-      this.resetScore();
-    }
-    this.changeCursor();
   }
 
   generateposition() {
     let randomNumber;
 
     do {
-      randomNumber = parseInt(Math.floor(Math.random() * this.boardSize ** 2));
-      
+      randomNumber = Math.floor(Math.random() * this.boardSize ** 2);
     } while (randomNumber === this.position);
 
     this.deletedImage();
@@ -75,6 +47,25 @@ export default class GamePlay {
     this.adventImage();
 
     return;
+  }
+
+  onBoardClick(e) {
+    e.preventDefault();
+    this.dead = document.querySelector(".dead");
+    this.lost = document.querySelector(".lost");
+    this.boardListeners.forEach((callback) => callback(e.target));
+
+    if (e.target.classList.contains("image")) {
+      ++this.dead.textContent;
+      this.dead.innerHTML = this.dead.textContent;
+      
+    } else {
+      ++this.lost.textContent;
+      this.lost.innerHTML = this.lost.textContent;
+      this.lose();
+    }
+
+    this.changeCursor();
   }
 
   deletedImage() {
@@ -89,6 +80,27 @@ export default class GamePlay {
     this.cells[this.position].append(this.activeImage);
   }
 
+  dialogSmow() {
+    const dialog = document.querySelector("dialog");
+
+    dialog.showModal();
+    this.dialogClose();
+  }
+
+  dialogClose() {
+    const close = document.querySelector(".close");
+    close.addEventListener("click", () => {
+ 
+    });
+    this.resetScore();
+  }
+
+  lose() {
+    if (this.lost.textContent == 5) {
+      this.dialogSmow();
+    }
+  }
+
   resetScore() {
     this.dead.textContent = 0;
     this.lost.textContent = 0;
@@ -100,8 +112,9 @@ export default class GamePlay {
   }
 
   start() {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       this.generateposition();
     }, 1000);
   }
+/*   clearInterval(intervalId); */
 }

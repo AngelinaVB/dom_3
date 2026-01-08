@@ -28,7 +28,7 @@ body {
 	border: 2px solid black;
         } 
 
-.img {  
+img {  
     width: 90%;  
     height: 90%; 
     background-repeat: no-repeat;
@@ -46,7 +46,18 @@ body {
 
 .status{
 	width: 30vmin;
-	border: 1px solid black;
 	margin:  15px auto;
-	background-color: #fff;
+	background-color: lightseagreen;
+	font-style: oblique;
+	font-weight: bold;
 }
+
+dialog {
+	  margin: auto;
+	  position: absolute;
+	  top: 0; left: 0; bottom: 0; right: 0;		  
+	  background: lightcoral;
+	  border: none;
+	  border-radius: 1rem;
+	  text-align: center;
+	}
