@@ -10,7 +10,7 @@ export default class Сharacter {
     image.classList.add("image");
     image.src = imageGoblin;
     image.alt = "Изображение персонажа";
-    document.querySelector("body").append(image);
+    document.querySelector(".cell").append(image);
     this.image = image;
     return this.image;
   }

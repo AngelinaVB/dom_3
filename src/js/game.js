@@ -102,6 +102,7 @@ export default class GamePlay {
   }
 
   resetScore() {
+    this.stop();
     this.dead.textContent = 0;
     this.lost.textContent = 0;
   }
@@ -110,11 +111,15 @@ export default class GamePlay {
     this.board.classList.toggle("hammer");
     this.board.classList.toggle("hammer-boom");
   }
+  
 
   start() {
-    const intervalId = setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.generateposition();
     }, 1000);
   }
-/*   clearInterval(intervalId); */
+
+  stop() {
+    clearInterval(this.intervalId);
+  }
 }
